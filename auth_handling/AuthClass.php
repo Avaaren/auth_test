@@ -158,7 +158,14 @@ class AuthClass {
           $code .= $chars[mt_rand(0, $chars_len)];  
         }
         return $code;
-      }
+    }
+
+    public static function userLogout(){
+        session_destroy();
+        setcookie("login_user", '', time()-3600);
+        setcookie("code_user", '', time()-3600);
+        header("Location: /auth_test.php/");
+    }
 }
 
 ?>
