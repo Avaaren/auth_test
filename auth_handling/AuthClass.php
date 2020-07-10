@@ -61,7 +61,7 @@ class AuthClass {
     }
 
     public static function checkUserUniqueness($login, $email){
-        $xml = simplexml_load_file('database.xml');
+        $xml = simplexml_load_file('config/database.xml');
 
         foreach ($xml as $value){
             if ($login == $value->login || $email == $value->email){
@@ -71,8 +71,8 @@ class AuthClass {
         return true;
     }
     public static function loginUser($login, $password){
-        include 'salt.php';
-        $xml = simplexml_load_file("database.xml");
+        include 'config/salt.php';
+        $xml = simplexml_load_file("config/database.xml");
         $found = false;
         $errors = array();
         foreach($xml as $value){
@@ -87,7 +87,7 @@ class AuthClass {
                     $_SESSION['login_user']=$login;
                     # Writing session code to db
                     $value->session->code_sess = $session_code;
-                    $xml->asXML('database.xml');
+                    $xml->asXML('config/database.xml');
                     # Setting cookies user and session code
                     setcookie("login_user", $_SESSION['login_user'], time()+3600*24*14);
                     setcookie("code_user", $session_code, time()+3600*24*14);
@@ -110,12 +110,12 @@ class AuthClass {
     }
 
     public static function registerUser($userData){
-        include 'salt.php';
+        include 'config/salt.php';
         # Or we can use password_hash() method, but in task salt + sha1
         $userData['password'] = sha1($userData['password'].$salt);
         unset($userData['password2']);
         unset($userData['errors']);
-        $xml = simplexml_load_file('database.xml');
+        $xml = simplexml_load_file('config/database.xml');
         $newUser = $xml->addChild('user');
         
         foreach ($userData as $key => $value) {
@@ -124,7 +124,7 @@ class AuthClass {
         }
 
 
-        $xml->asXML('database.xml');
+        $xml->asXML('config/database.xml');
         
 
     }
@@ -135,7 +135,7 @@ class AuthClass {
           # Coockie existing check
           if (isset($_COOKIE['login_user']) and isset($_COOKIE['code_user'])) {
             # Cookie already exist -> compare with database by foreach
-            $xml = simplexml_load_file("database.xml");
+            $xml = simplexml_load_file("config/database.xml");
 
             foreach($xml as $value){
                 # Comparing is correct -> start session and update cookies
@@ -164,7 +164,7 @@ class AuthClass {
         session_destroy();
         setcookie("login_user", '', time()-3600);
         setcookie("code_user", '', time()-3600);
-        header("Location: /auth_test.php/");
+        header("Location: /auth_test/");
     }
 }
 
