@@ -1,6 +1,7 @@
 <?php
 
 namespace Lol;
+require_once 'salt.php';
 
 class AuthClass {
 
@@ -71,15 +72,27 @@ class AuthClass {
     }
     public static function loginUser($login, $password){
         $xml = simplexml_load_file("database.xml");
-        $found = false;
+        $user = null;
 
-        foreach($xml as $user){
-            echo $user->login;
+        foreach($xml as $value){
+            if ($login == $value->login){
+                $user['login'] = $value->login;
+                $user['password'] = $value->password;
+                break;
+            }
         }
+        if (empty($user)){
+            array_push($errors, "Такого пользователя не найдено");
+        }
+
+        if (not ($user['password'] == sha1($password.$salt))){
+            array_push($errors, "Пароли не совпадают");
+        }
+        
+        return array('user'=>$user, 'errors'=>$errors);
     }
 
     public static function registerUser($userData){
-        $salt = 'k23OlQ1=4';
         # Or we can use password_hash() method, but in task salt + sha1
         $userData['password'] = sha1($userData['password'].$salt);
         unset($userData['password2']);
