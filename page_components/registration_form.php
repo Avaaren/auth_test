@@ -1,4 +1,4 @@
-<div class="form-block">
+<div class="form-block" id="registration-form">
     <form method="post" action="registration.php" id="registration-form" class="auth-form">
         <input type="text" id="login" name="login" placeholder="login"> <br>
         <input type="email" id="email" name="email" placeholder="email"> <br>
