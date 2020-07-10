@@ -9,9 +9,13 @@
         <div class="navbar-item">
         <?php if (isset($_SESSION['login_user'])): ?>
             <a href="/auth_test/auth_handling/logout.php/">Выйти</a>
-        <?php else: ?>
-            <a href="">Войти</a>
         <?php endif; ?>
+        </div>
+        <div class="navbar-item">
+            <a href="#" id='registration-button'>Регистрация</a>
+        </div>
+        <div class="navbar-item">
+        <a href="#" id='login-button'>Вход</a>
         </div>
     </div>
 </nav>

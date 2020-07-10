@@ -74,3 +74,7 @@ a {
     cursor: pointer;
     border: 2px solid rgb(0, 143, 19);
 }
+
+#login-form {
+    display: none;
+}
