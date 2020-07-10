@@ -2,9 +2,7 @@
 
 namespace Lol;
 
-require_once 'salt.php';
 require_once 'conf.php';
-
 class AuthClass {
 
     public static function checkLoginIsset(){
@@ -73,9 +71,10 @@ class AuthClass {
         return true;
     }
     public static function loginUser($login, $password){
+        include 'salt.php';
         $xml = simplexml_load_file("database.xml");
         $found = false;
-
+        $errors = array();
         foreach($xml as $value){
             # Username is found
             if ($login == $value->login){
@@ -88,6 +87,7 @@ class AuthClass {
                     $_SESSION['login_user']=$login;
                     # Writing session code to db
                     $value->session->code_sess = $session_code;
+                    $xml->asXML('database.xml');
                     # Setting cookies user and session code
                     setcookie("login_user", $_SESSION['login_user'], time()+3600*24*14);
                     setcookie("code_user", $session_code, time()+3600*24*14);
@@ -102,11 +102,15 @@ class AuthClass {
         if (!$found){
             array_push($errors, "Такого пользователя не найдено");
         }
+        if (!empty($errors)){
+            return array('is_logged_in'=> false, 'errors'=>$errors);
+        }
+        else return array('is_logged_in'=> true);
         
-        return array('errors'=>$errors);
     }
 
     public static function registerUser($userData){
+        include 'salt.php';
         # Or we can use password_hash() method, but in task salt + sha1
         $userData['password'] = sha1($userData['password'].$salt);
         unset($userData['password2']);
