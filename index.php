@@ -1,3 +1,7 @@
+<?php 
+require_once 'conf.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

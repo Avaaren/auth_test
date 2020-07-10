@@ -1,7 +1,9 @@
 <?php
 
 namespace Lol;
+
 require_once 'salt.php';
+require_once 'conf.php';
 
 class AuthClass {
 
