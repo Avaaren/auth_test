@@ -8,7 +8,7 @@
     <div class="navbar-section">
         <div class="navbar-item">
         <?php if (isset($_SESSION['login_user'])): ?>
-            <a href="">Выйти</a>
+            <a href="/auth_test/auth_handling/logout.php/">Выйти</a>
         <?php else: ?>
             <a href="">Войти</a>
         <?php endif; ?>

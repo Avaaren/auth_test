@@ -1,6 +1,6 @@
 <?php 
 
-require_once 'conf.php';
+require_once './config/conf.php';
 
 include 'AuthClass.php';
 use Lol\AuthClass;

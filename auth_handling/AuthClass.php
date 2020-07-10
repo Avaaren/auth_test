@@ -2,7 +2,7 @@
 
 namespace Lol;
 
-require_once 'conf.php';
+require_once './config/conf.php';
 class AuthClass {
 
     public static function checkLoginIsset(){
