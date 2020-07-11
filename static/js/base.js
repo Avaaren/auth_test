@@ -36,4 +36,27 @@ $(document).ready(function(){
             }
         });
     });
+
+    $('#login-submit').on('click', function(event){
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '/auth_test/auth_handling/login.php',
+            data: $("#login-form input").serialize(),
+            success: function(data){
+                console.log(data);
+                var jsonData = JSON.parse(data);
+                console.log(jsonData);
+                if (!jsonData.success && jsonData.errors){
+                    jsonData.errors.forEach((item) => {
+                        alert(item);
+                    });
+                }
+                else {
+                    alert('Успешная авторизация');
+                    window.location.href = '/auth_test/';
+                }
+            }
+        });
+    });
 });
