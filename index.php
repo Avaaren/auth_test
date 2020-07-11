@@ -14,7 +14,7 @@ require_once './auth_handling/config/conf.php';
 <?php include './page_components/header.php'; ?>
 <?php if (isset($_SESSION['login_user'])):?>
     <?php 
-        echo "Hello".$_SESSION['login_user'];
+        echo "Hello ".$_SESSION['login_user'];
     ?>
 <?php else:?>
     <?php include './page_components/registration_form.php' ?>
