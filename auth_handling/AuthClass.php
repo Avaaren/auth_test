@@ -6,7 +6,7 @@ require_once './config/conf.php';
 class AuthClass {
 
     public static function checkLoginIsset(){
-
+        # Check is POST request has all necessary parameters
         if (isset($_POST['login']) && isset($_POST['password'])){
             return true;
         }
@@ -16,6 +16,7 @@ class AuthClass {
     }
 
     public static function checkRegistrationIsset(){
+        # Check is POST request has all necessary parameters
         if (isset($_POST['login']) &&
             isset($_POST['email']) &&
             isset($_POST['name']) &&
@@ -29,6 +30,7 @@ class AuthClass {
     }
 
     public static function cleanLoginData(){
+        # Cleaning login data from special chars and spaces
         $login = trim(htmlentities($_POST['login']));
         $password = trim(htmlentities($_POST['password']));
 
@@ -36,6 +38,7 @@ class AuthClass {
     }
 
     public static function cleanRegistrationData(){
+
         $cleanedData = array();
         $errors = array();
         # Clean form data spaces and symbols
@@ -62,7 +65,7 @@ class AuthClass {
 
     public static function checkUserUniqueness($login, $email){
         $xml = simplexml_load_file('config/database.xml');
-
+        # If same email or login found -> return false
         foreach ($xml as $value){
             if ($login == $value->login || $email == $value->email){
                 return false;
@@ -70,11 +73,13 @@ class AuthClass {
         }
         return true;
     }
+
     public static function loginUser($login, $password){
         include 'config/salt.php';
         $xml = simplexml_load_file("config/database.xml");
         $found = false;
         $errors = array();
+
         foreach($xml as $value){
             # Username is found
             if ($login == $value->login){
@@ -110,19 +115,19 @@ class AuthClass {
     }
 
     public static function registerUser($userData){
+        # Creating new record in database
         include 'config/salt.php';
         # Or we can use password_hash() method, but in task salt + sha1
         $userData['password'] = sha1($userData['password'].$salt);
+        # Unsetting unnecessary for registration fields
         unset($userData['password2']);
         unset($userData['errors']);
         $xml = simplexml_load_file('config/database.xml');
+        # Writing new data in xml file
         $newUser = $xml->addChild('user');
-        
         foreach ($userData as $key => $value) {
             $newUser->addChild($key, $value);
         }
-
-
         $xml->asXML('config/database.xml');
         
 
@@ -150,6 +155,7 @@ class AuthClass {
     }
 
     public static function generateCode($length) {
+        # Generating random char string
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRQSTUVWXYZ0123456789";
         $code = "";
         $chars_len = strlen($chars) - 1;  
@@ -160,6 +166,7 @@ class AuthClass {
     }
 
     public static function userLogout(){
+        # Destroying cookies and session for logout user
         session_destroy();
         setcookie("login_user", '', time()-3600);
         setcookie("code_user", '', time()-3600);
@@ -167,6 +174,7 @@ class AuthClass {
     }
 
     public static function unsuccessfulResponse($error){
+        # Method for returning errors while register or login
         if (is_array($error)){
             $result['errors'] = $error;
         }

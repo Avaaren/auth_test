@@ -14,6 +14,7 @@ if (AuthClass::checkRegistrationIsset()){
         AuthClass::unsuccessfulResponse($registrationCleanedData['errors']);
     }
     else {
+        # Check user for unique and try to register him
         if (AuthClass::checkUserUniqueness($registrationCleanedData['login'], $registrationCleanedData['email'])){
             AuthClass::registerUser($registrationCleanedData);
             echo json_encode(array('success' => true, 'errors' => null));

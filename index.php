@@ -11,11 +11,14 @@ require_once './auth_handling/config/conf.php';
     <link rel="stylesheet" href="static/css/base.css">
 </head>
 <body>
+<!-- Including navbar -->
 <?php include './page_components/header.php'; ?>
+<!-- If user logged in -> show Hello Username -->
 <?php if (isset($_SESSION['login_user'])):?>
     <?php 
         echo "Hello ".$_SESSION['login_user'];
     ?>
+<!-- Else -> incuding login and registration forms -->
 <?php else:?>
     <?php include './page_components/registration_form.php' ?>
     <?php include './page_components/login_form.php' ?>
