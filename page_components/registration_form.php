@@ -5,6 +5,6 @@
         <input type="text" id="name" name="name" placeholder="name"> <br>
         <input type="password" id="password" name="password" placeholder="password"> <br>
         <input type="password" id="password2" name="password2" placeholder="password2"> <br>
-        <button id="register-submit" class="form-button">Зарегестрироваться</button>
     </form>
+    <button id="registration-submit" class="form-button">Зарегестрироваться</button>
 </div>

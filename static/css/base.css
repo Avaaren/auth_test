@@ -58,7 +58,7 @@ a {
     border: 2px solid rgb(0, 143, 19);
 }
 
-.auth-form button{
+.form-button {
     width: 200px;
     background: none;
     padding: 15px;
@@ -70,7 +70,7 @@ a {
     color: white;
 }
 
-.auth-form button:hover{
+.form-button:hover{
     cursor: pointer;
     border: 2px solid rgb(0, 143, 19);
 }
