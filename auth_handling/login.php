@@ -5,19 +5,19 @@ require_once './config/conf.php';
 include 'AuthClass.php';
 use Lol\AuthClass;
 
-AuthClass::checkLoginIsset();
+$result = array();
 
 if (AuthClass::checkLoginIsset()){
     $loginCleanedData = AuthClass::cleanLoginData();
     $loginStatus = AuthClass::loginUser($loginCleanedData['login'], $loginCleanedData['password']);
     if ($loginStatus['is_logged_in']==true){
-        header("Location: /auth_test/");
+        echo json_encode(array('success' => true, 'errors' => null));
     }
     else {
-        print_r($loginStatus['errors']);
+        AuthClass::unsuccessfulResponse($loginStatus['errors']);
     }
 }
 else {
-    print_r($_POST);
+    AuthClass::unsuccessfulResponse("Запрос отправлен неверно");
 }
 ?>  
