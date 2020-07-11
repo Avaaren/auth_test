@@ -119,7 +119,6 @@ class AuthClass {
         $newUser = $xml->addChild('user');
         
         foreach ($userData as $key => $value) {
-            echo "$key -- $value <br>";
             $newUser->addChild($key, $value);
         }
 
@@ -165,6 +164,17 @@ class AuthClass {
         setcookie("login_user", '', time()-3600);
         setcookie("code_user", '', time()-3600);
         header("Location: /auth_test/");
+    }
+
+    public static function unsuccessfulResponse($error){
+        if (is_array($error)){
+            $result['errors'] = $error;
+        }
+        else {
+            array_push($result['errors'], $error);
+        }
+        $result['success'] = false;
+        echo json_encode($result);
     }
 }
 
